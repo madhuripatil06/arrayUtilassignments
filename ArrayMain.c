@@ -24,6 +24,7 @@ int main(){
 	test_for_map_on_array_to_add_num();
 	test_for_forEach_function_on_array();
 	test_for_forEach_function_on_array_for_get_square();
+	test_for_reduce_in_array();
 	return 0;
 }
 

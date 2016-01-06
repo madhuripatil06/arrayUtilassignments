@@ -386,3 +386,24 @@ void test_for_forEach_function_on_array_for_get_square(){
 	printf("22 tests passed -------------\n");
 };
 
+void* add(void* hint, void* previousItem, void* item){
+	*((int *)previousItem) += *((int *)item);
+	return previousItem;
+};
+
+void test_for_reduce_in_array(){
+	ArrayUtil util = create(4,8);
+	int *base = (int *)util.base;
+	base[0] = 67;
+	base[1] = 21;
+	base[2] = 34;
+	base[3] = 234;
+	base[4] = 676;
+	base[5] = 77;
+	int hint = 0;
+	int intialValue = 0;
+	int result = *((int *)reduce(util, add, &hint, &intialValue));
+	assert(result == 1109);
+	printf("23 tests passed -------------\n");
+};
+
