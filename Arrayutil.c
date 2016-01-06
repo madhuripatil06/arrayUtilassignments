@@ -79,6 +79,7 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 		}; 
 		base += util.typeSize; 
 	};
+	return count;
 
 	// destination in order;
 
@@ -94,7 +95,24 @@ int filter(ArrayUtil util, MatchFunc* match, void* hint, void** destination, int
 	// 	printf("%d\n",*((int *)*(destination-util.typeSize)));
 	// 	destination -= util.typeSize;
 	// }
-	return count;
 };
 
+
+void map(ArrayUtil source, ArrayUtil destination, ConvertFunc* convert, void* hint){
+	void * base_of_source = source.base;
+	void * base_of_destination = destination.base;
+	for(int i = 0 ; i < source.length ; i++){
+		convert(hint, base_of_source, base_of_destination);
+		base_of_destination += (destination.typeSize); 
+		base_of_source += (source.typeSize); 
+	};
+};
+
+void forEach(ArrayUtil util, OperationFunc* operation, void* hint){
+	void * base = util.base;
+	for(int  i = 0 ; i < util.length ; i++){
+		operation(hint , base);
+		base += util.typeSize; 
+	};
+};
 	

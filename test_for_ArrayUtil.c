@@ -319,5 +319,70 @@ void test_for_filter_of_the_vowels(){
 	int ans = filter(util,is_vowel,hint.base,pointer_destination.base,pointer_destination.length);
 	assert(ans == 2);
 	printf("19 tests passed -------------\n");
-}
+};
+
+void add_num(void* hint, void* sourceItem, void* destinationItem){
+	*((int *)destinationItem) = *((int *)sourceItem) + *((int *)hint);
+};
+
+void test_for_map_on_array_to_add_num(){
+	ArrayUtil source = create(4,7);
+	ArrayUtil destination = create(4,7);
+	int * base = (int *)source.base;
+	base[0] = 3;
+	base[1] = 8;
+	base[2] = 23;
+	base[3] = 56;
+	base[4] = 7;
+	int hint = 2;
+	map(source, destination, add_num, &hint);
+	for(int i = 0 ; i < source.length ; i ++){
+		int source_num = *((int *)source.base) + hint;
+		int destination_num = *((int *)destination.base);
+		assert( source_num == destination_num );
+		destination.base += destination.typeSize;
+		source.base += source.typeSize;
+	};
+	printf("20 tests passing ------------\n");
+};
+
+void multiply_hint(void* hint, void* item){
+	*((int *)item) = (*((int *)item)) * (*((int *)hint));
+};
+
+void get_square(void * hint , void * item){
+	*((int *)item) = (*((int *)item)) * (*((int *)item));
+};
+
+void test_for_forEach_function_on_array(){
+	ArrayUtil util = create(4,8);
+	int * base  = (int *)util.base;
+	base[0] = 90;
+	base[1] = 9;
+	base[2] = 34;
+	base[3] = 67;
+	int hint  = 2 ; 
+	forEach(util, multiply_hint , &hint);
+	assert(base[0] == 180);
+	assert(base[1] == 18);
+	assert(base[2] == 68);
+	assert(base[3] == 134);
+	printf("21 tests passed -------------\n");
+};
+
+void test_for_forEach_function_on_array_for_get_square(){
+	ArrayUtil util = create(4,8);
+	int * base  = (int *)util.base;
+	base[0] = 1;
+	base[1] = 4;
+	base[2] = 9;
+	base[3] = 6;
+	int hint  = 2 ; 
+	forEach(util, get_square , &hint);
+	assert(base[0] == 1);
+	assert(base[1] == 16);
+	assert(base[2] == 81);
+	assert(base[3] == 36);
+	printf("22 tests passed -------------\n");
+};
 
