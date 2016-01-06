@@ -2,6 +2,7 @@
 #include "Arrayutil.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 void test_for_create_array_of_numbers(){
 	ArrayUtil numbers = create(4,8);
@@ -350,8 +351,8 @@ void multiply_hint(void* hint, void* item){
 	*((int *)item) = (*((int *)item)) * (*((int *)hint));
 };
 
-void get_square(void * hint , void * item){
-	*((int *)item) = (*((int *)item)) * (*((int *)item));
+void get_pow(void * hint , void * item){
+	*((int *)item) = pow(*((int *)item),*((int *)hint));
 };
 
 void test_for_forEach_function_on_array(){
@@ -378,7 +379,7 @@ void test_for_forEach_function_on_array_for_get_square(){
 	base[2] = 9;
 	base[3] = 6;
 	int hint  = 2 ; 
-	forEach(util, get_square , &hint);
+	forEach(util, get_pow , &hint);
 	assert(base[0] == 1);
 	assert(base[1] == 16);
 	assert(base[2] == 81);
