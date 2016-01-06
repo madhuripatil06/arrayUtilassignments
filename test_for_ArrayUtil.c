@@ -17,7 +17,7 @@ void test_for_create_array_of_numbers(){
 	int b = ((int *)numbers.base)[1];
 	assert(a == 90);
 	assert(b == 45);
-	printf("1 test is passed ----------------\n");
+	printf("1 test is passed ------------ \n");
 };
 
 void test_for_create_array_of_char(){
@@ -34,7 +34,7 @@ void test_for_create_array_of_char(){
 	char b = ((char *)chars.base)[1];
 	assert(a == 'A');
 	assert(b == 'a');
-	printf("2 test is passed ----------------\n");
+	printf("2 tests passed -------------- \n");
 };
 
 void test_for_resize_array_of_small_size(){
@@ -42,7 +42,7 @@ void test_for_resize_array_of_small_size(){
 	ArrayUtil resized_array = resize(array,6);
 	int * base = (int *)resized_array.base;
 	assert(resized_array.length == 6);
-	printf("3 test is passed ----------------\n");
+	printf("3 tests passed -------------- \n");
 };
 
 void test_for_resize_array_of_big_size(){
@@ -56,7 +56,7 @@ void test_for_resize_array_of_big_size(){
 	int * base_of_resized = (int *)resized_array.base;
 	assert(base_of_resized[0] == 1);
 	assert(base_of_resized[3] == 4);
-	printf("4 test is passed ----------------\n");
+	printf("4 tests passed -------------- \n");
 };
 
 
@@ -75,7 +75,7 @@ void test_for_are_equal(){
 	base1[3] = 4;
 	int result = areEqual(array1,array2);
 	assert(result == 1);
-	printf("5 test passed -----------\n");
+	printf("5 tests passed -------------- \n");
 };
 
 void test_for_not_equal(){
@@ -93,7 +93,7 @@ void test_for_not_equal(){
 	base1[3] = 4;
 	int result = areEqual(array1,array2);
 	assert(result == 0);
-	printf("6 test passed -----------\n");
+	printf("6 tests passed -------------- \n");
 
 };
 
@@ -112,7 +112,212 @@ void test_for_char_equal(){
 	base1[3] = 'd';
 	int result = areEqual(array1,array2);
 	assert(result == 1);
-	printf("7 test passed -----------\n");
+	printf("7 tests passed -------------- \n");
 };
 
+void test_for_find_index_if_it_is_there(){
+	ArrayUtil util = create(4,2);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 23;
+	int a = 23;
+	int b = 45;
+	int result = findIndex(util, &a);
+	assert(result == 1);
+	int first = findIndex(util,&b);
+	assert(first == 0);
+	printf("8 tests passed -------------- \n");
+};
+
+void test_for_find_index_if_it_is_char(){
+	char r = 'a';
+	ArrayUtil util1 = create(1,4);
+	char * base_for_char = (char *)util1.base;
+	base_for_char[0] = 'r';
+	base_for_char[1] = 'A';
+	base_for_char[2] = 'a';
+	base_for_char[3] = 'p';
+	int result_for_char = findIndex(util1,&r);
+	assert(result_for_char == 2);
+	printf("9 tests passed  ------------- \n");
+};
+
+void test_for_find_index_if_it_is_not_there(){
+	ArrayUtil util = create(4,2);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 23;
+	int a = 93;
+	int result = findIndex(util, &a);
+	assert(result == -1);
+	printf("10 tests passed ------------- \n");
+};
+
+int is_23(void * nothing,void* num){
+	return *((int*)num) == 23;
+};
+
+int is_divisible(void * hint , void * num){
+	return *((int *)num) % *((int *)hint) == 0;
+};
+
+void test_for_find_first_if_it_is_there(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 23;
+	base[2] = 23;
+	base[3] = 27;
+	int er = -999;
+	void * hint = &er;
+	int anwser = *((int *)findFirst(util,is_23,hint));
+	assert(anwser == 23);
+	printf("11 tests passed ------------- \n");
+};
+
+void test_for_find_first_if_it_is_not_there(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 93;
+	base[2] = 73;
+	base[3] = 27;
+	int er = 'N';
+	void * hint = &er;
+	assert(findFirst(util,is_23,hint) == NULL);
+	printf("12 tests passed ------------- \n");
+};
+
+void test_for_find_first_for_divisible_by(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 90;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 5;
+	void * hint = &er;
+	int ans = *((int *)findFirst(util,is_divisible,hint));
+	assert(ans == 45);
+	printf("13 tests passed ------------- \n");
+};
+
+void test_for_find_last_for_divisible_by(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 90;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 5;
+	void * hint = &er;
+	int ans = *((int *)findLast(util,is_divisible,hint));
+	assert(ans == 25);
+	printf("14 tests passed ------------- \n");
+};
+
+void test_for_find_count_for_divisible_by(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 90;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 5;
+	void * hint = &er;
+	int ans = count(util,is_divisible,hint);
+	assert(ans == 3);
+	printf("15 tests passed ------------- \n");
+};
+
+void test_for_find_count_for_divisible_by_if_it_is_absent(){
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 90;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 7;
+	void * hint = &er;
+	int ans = count(util,is_divisible,hint);
+	assert(ans == 0);
+	printf("16 tests passed ------------- \n");
+};
+
+void test_for_filter_for_divisible_by_if_it_is_present(){
+	ArrayUtil destination = create(4,4);
+	ArrayUtil pointer_destination = create(4,4);
+	for(int  i = 0 ; i < pointer_destination.length ; i++){
+		pointer_destination.base = &destination.base;
+		destination.base += destination.typeSize;
+		pointer_destination.base += pointer_destination.typeSize;
+	};
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 90;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 5;
+	void * hint = &er;
+	int ans = filter(util,is_divisible,hint,pointer_destination.base,pointer_destination.length);
+	assert(ans == 3);
+	printf("17 tests passed ------------- \n");
+};
+
+
+void test_for_filter_for_divisible_by_if_it_is_absent(){
+	ArrayUtil destination = create(4,4);
+	ArrayUtil pointer_destination = create(4,4);
+	for(int  i = 0 ; i < pointer_destination.length ; i++){
+		pointer_destination.base = &destination.base;
+		destination.base += destination.typeSize;
+		pointer_destination.base += pointer_destination.typeSize;
+	};
+	ArrayUtil util = create(4,4);
+	int * base = (int *)util.base;
+	base[0] = 45;
+	base[1] = 97;
+	base[2] = 73;
+	base[3] = 25;
+	int er = 10;
+	void * hint = &er;
+	int ans = filter(util,is_divisible,hint,pointer_destination.base,pointer_destination.length);
+	assert(ans == 0);
+	printf("18 tests passed ------------- \n");
+};
+
+int is_vowel(void * hint , void * letter){
+	for(int i = 0 ; i < 5 ; i ++){
+		if(*((char *)hint) == *((char *)letter)) return 1;
+		hint += 1; 
+	};
+	return 0;
+};
+
+void test_for_filter_of_the_vowels(){
+	ArrayUtil destination = create(1,4);
+	ArrayUtil pointer_destination = create(1,4);
+	for(int  i = 0 ; i < pointer_destination.length ; i++){
+		pointer_destination.base = &destination.base;
+		destination.base += destination.typeSize;
+		pointer_destination.base += pointer_destination.typeSize;
+	};
+	ArrayUtil util = create(1,4);
+	char * base = (char *)util.base;
+	base[0] = 'a';
+	base[1] = 'e';
+	base[2] = 'j';
+	base[3] = 'p';
+	ArrayUtil hint = create(1,5);
+	char * hint_base = (char *)hint.base;
+	hint_base[0] = 'a';
+	hint_base[1] = 'e';
+	hint_base[2] = 'i';
+	hint_base[3] = 'o';
+	hint_base[4] = 'u';
+	int ans = filter(util,is_vowel,hint.base,pointer_destination.base,pointer_destination.length);
+	assert(ans == 2);
+	printf("19 tests passed -------------\n");
+}
 
